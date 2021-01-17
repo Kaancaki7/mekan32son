@@ -1,0 +1,35 @@
+extends layout
+include ortak_fonksiyonlar/fonksiyonlar
+block content
+ #banner.page-header
+  //satır oluştur
+  .row
+   .col-lg-6
+    //controller içind tanımladığımız değişkenleri kullandık
+    //ya eşittir işaretleriyle ya da #{} biçiminde 
+    h1=sayfaBaslik.siteAd
+      small &nbsp;#{sayfaBaslik.aciklama}
+ .row
+   //mobil uyumlu lisyeleme 
+   .col-xs-12.col-sm-12
+   .error=mesaj
+     //each ifadesi dizide dolaşmayı sağlar.
+     //bir nevi for döngüsü
+     each mekan in mekanlar
+      .row.list-group
+       .col-xs-12.list-group-item
+           //Linklerin,yıldızların ve adresin oluşturulması
+           h4
+            -var mekanid=mekan._id 
+             a(href='/mekan/'+mekanid)=mekan.ad
+             small &nbsp;
+             //javascript kodu eklemek için - işareti kullanılır.
+             //for döngüsüyle mekan puanı kadar dolu yıldız.
+             //geri kalanlar boş yıldız.
+             +puanOlustur(mekan.puan)
+            span.badge.pull-right.badge-default=mekan.mesafe
+            p.address=mekan.adres
+            p
+             each imkan in mekan.imkanlar
+              span.label.label-warning= imkan
+             |  &nbsp;
